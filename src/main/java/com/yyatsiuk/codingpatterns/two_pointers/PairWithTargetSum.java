@@ -20,14 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PairWithTargetSum {
 
-    public static int[] twoSum(int[] numbers, int target) {
+    public static int[] twoSum(int[] arr, int targetSum) {
         int start = 0;
-        int end = numbers.length - 1;
+        int end = arr.length - 1;
 
         while (start < end) {
-            if (numbers[start] + numbers[end] < target) {
+            if (arr[start] + arr[end] < targetSum) {
                 start++;
-            } else if (numbers[start] + numbers[end] > target) {
+            } else if (arr[start] + arr[end] > targetSum) {
                 end--;
             } else {
                 return new int[]{start + 1, end + 1};
