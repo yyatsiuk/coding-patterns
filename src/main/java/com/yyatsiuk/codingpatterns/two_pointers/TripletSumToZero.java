@@ -1,5 +1,7 @@
 package com.yyatsiuk.codingpatterns.two_pointers;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
  * Output: [[-5, 2, 3], [-2, -1, 3]]
  * Explanation: There are two unique triplets whose sum is equal to zero.
  */
+@Slf4j
 public class TripletSumToZero {
 
     public static List<List<Integer>> searchTriplets(int[] nums) {
@@ -62,8 +65,8 @@ public class TripletSumToZero {
     }
 
     public static void main(String[] args) {
-        System.out.println(TripletSumToZero.searchTriplets(new int[]{-3, 0, 1, 2, -1, 1, -2}));
-        System.out.println(TripletSumToZero.searchTriplets(new int[]{-5, 2, -1, -2, 3}));
+        log.info("Result = {}", TripletSumToZero.searchTriplets(new int[]{-3, 0, 1, 2, -1, 1, -2}));
+        log.info("Result = {}", TripletSumToZero.searchTriplets(new int[]{-5, 2, -1, -2, 3}));
     }
 
 }
