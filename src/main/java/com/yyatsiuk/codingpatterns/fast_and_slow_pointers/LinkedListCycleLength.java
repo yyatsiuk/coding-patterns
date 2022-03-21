@@ -48,6 +48,7 @@ public class LinkedListCycleLength {
 
         head.next.next.next.next.next.next = head.next.next.next;
         System.out.println("LinkedList cycle length: " + LinkedListCycleLength.findCycleLength(head));
+
     }
 
 }
