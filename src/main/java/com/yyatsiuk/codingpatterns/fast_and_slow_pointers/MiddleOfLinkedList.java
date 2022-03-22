@@ -19,7 +19,7 @@ package com.yyatsiuk.codingpatterns.fast_and_slow_pointers;
 public class MiddleOfLinkedList {
 
     private static class ListNode {
-        int value = 0;
+        int value;
         ListNode next;
 
         ListNode(int value) {

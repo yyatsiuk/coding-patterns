@@ -12,7 +12,7 @@ package com.yyatsiuk.codingpatterns.fast_and_slow_pointers;
 public class LinkedListCycle {
 
     private static class ListNode {
-        private int value = 0;
+        private int value;
         private ListNode next;
 
         ListNode(int value) {

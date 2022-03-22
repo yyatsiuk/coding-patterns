@@ -3,7 +3,7 @@ package com.yyatsiuk.codingpatterns.fast_and_slow_pointers;
 public class LinkedListCycleLength {
 
     private static class ListNode {
-        private int value = 0;
+        private int value;
         private ListNode next;
 
         ListNode(int value) {
