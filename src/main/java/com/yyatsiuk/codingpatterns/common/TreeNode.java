@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.bredth_first_search.common;
+package com.yyatsiuk.codingpatterns.common;
 
 public class TreeNode {
 

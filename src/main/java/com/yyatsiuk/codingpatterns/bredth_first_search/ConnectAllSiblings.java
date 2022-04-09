@@ -1,6 +1,6 @@
 package com.yyatsiuk.codingpatterns.bredth_first_search;
 
-import com.yyatsiuk.codingpatterns.bredth_first_search.common.Node;
+import com.yyatsiuk.codingpatterns.common.Node;
 
 import java.util.LinkedList;
 import java.util.Queue;

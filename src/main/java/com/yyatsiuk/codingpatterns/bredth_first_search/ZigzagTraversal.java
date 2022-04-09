@@ -1,6 +1,6 @@
 package com.yyatsiuk.codingpatterns.bredth_first_search;
 
-import com.yyatsiuk.codingpatterns.bredth_first_search.common.TreeNode;
+import com.yyatsiuk.codingpatterns.common.TreeNode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
