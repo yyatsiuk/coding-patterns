@@ -34,12 +34,11 @@ public class FindAllTreePaths {
         }
 
         path.add(root.val);
-        sum -= root.val;
-        if (sum == 0 && root.left == null && root.right == null) {
+        if (sum == root.val && root.left == null && root.right == null) {
             paths.add(new ArrayList<>(path));
         } else {
-            dfs(root.left, sum, path, paths);
-            dfs(root.right, sum, path, paths);
+            dfs(root.left, sum - root.val, path, paths);
+            dfs(root.right, sum - root.val, path, paths);
         }
 
         path.remove(path.size() - 1);
