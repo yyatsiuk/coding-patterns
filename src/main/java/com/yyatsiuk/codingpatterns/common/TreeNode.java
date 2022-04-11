@@ -21,15 +21,18 @@ public class TreeNode {
         Queue<TreeNode> nodes = new LinkedList<>();
         nodes.add(root);
         while (!nodes.isEmpty()) {
-            TreeNode node = nodes.remove();
-            System.out.println(node.val);
-
-            if (node.left != null) {
-                nodes.add(node.left);
+            int levelSize = nodes.size();
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = nodes.remove();
+                System.out.print(node.val + " ");
+                if (node.left != null) {
+                    nodes.add(node.left);
+                }
+                if (node.right != null) {
+                    nodes.add(node.right);
+                }
             }
-            if (node.right != null) {
-                nodes.add(node.right);
-            }
+            System.out.println();
         }
     }
 
