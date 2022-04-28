@@ -1,6 +1,7 @@
 package com.yyatsiuk.codingpatterns.top_k;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +29,40 @@ public class FrequencySort {
         return sb.toString();
     }
 
+    public String frequencySortOptimized(String s) {
+        Map<Character, Integer> counts = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            counts.put(c, counts.getOrDefault(c, 0) + 1);
+        }
+
+        int maxFreq = Collections.max(counts.values());
+        List<Character>[] buckets = new List[maxFreq + 1];
+        for (Map.Entry<Character, Integer> entry : counts.entrySet()) {
+            if (buckets[entry.getValue()] == null) {
+                buckets[entry.getValue()] = new ArrayList<>();
+            }
+            buckets[entry.getValue()].add(entry.getKey());
+        }
+
+        StringBuilder strBuilder = new StringBuilder();
+        for (int i = buckets.length - 1; i > 0; i--) {
+            if (buckets[i] != null) {
+                for (Character ch : buckets[i]) {
+                    strBuilder.append(String.valueOf(ch).repeat(i));
+                }
+            }
+        }
+
+        return strBuilder.toString();
+    }
+
 
     public static void main(String[] args) {
         FrequencySort frequencySort = new FrequencySort();
-        String result = frequencySort.frequencySort("Programming");
+        String result = frequencySort.frequencySortOptimized("Programming");
         System.out.println("Here is the given string after sorting characters by frequency: " + result);
 
-        result = frequencySort.frequencySort("abcbab");
+        result = frequencySort.frequencySortOptimized("abcbab");
         System.out.println("Here is the given string after sorting characters by frequency: " + result);
     }
 
