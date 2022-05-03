@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.bitwise_xor;
+package com.yyatsiuk.codingpatterns.bit_manipulations;
 
 /**
  * <a href="https://leetcode.com/problems/flipping-an-image/">832. Flipping an Image</a>

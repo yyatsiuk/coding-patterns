@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.bitwise_xor;
+package com.yyatsiuk.codingpatterns.bit_manipulations;
 
 public class MissingNumber {
 
