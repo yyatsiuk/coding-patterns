@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.recursion;
+package com.yyatsiuk.codingpatterns.math;
 
 /**
  * <a href="https://leetcode.com/problems/powx-n/">50. Pow(x, n)</a>

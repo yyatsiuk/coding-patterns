@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.reversal_of_linked_list;
+package com.yyatsiuk.codingpatterns.linked_list;
 
 import com.yyatsiuk.codingpatterns.common.ListNode;
 
