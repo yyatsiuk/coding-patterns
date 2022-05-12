@@ -2,6 +2,7 @@ package com.yyatsiuk.codingpatterns.stack;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * <a href="https://leetcode.com/problems/min-stack/">155. Min Stack</a>
