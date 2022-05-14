@@ -1,6 +1,8 @@
 package com.yyatsiuk.codingpatterns.bredth_first_search;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -49,6 +51,7 @@ public class FloodFill {
         if (color != newColor) dfs(image, sr, sc, color, newColor);
         return image;
     }
+
     public void dfs(int[][] image, int r, int c, int color, int newColor) {
         if (image[r][c] == color) {
             image[r][c] = newColor;
@@ -59,5 +62,27 @@ public class FloodFill {
         }
     }
 
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        if (intervals.length == 0) {
+            return new int[][]{newInterval};
+        }
+
+        List<int[]> mergedIntervals = new ArrayList<>();
+        int iter = 0;
+        while (iter < intervals.length) {
+            int[] interval = intervals[iter++];
+            if (newInterval[1] >= interval[0] && newInterval[0] <= interval[1]) {
+                newInterval[0] = Math.min(interval[0], newInterval[0]);
+                newInterval[1] = Math.max(interval[1], newInterval[1]);
+            } else if (newInterval[0] < interval[0]) {
+                mergedIntervals.add(newInterval);
+                break;
+            } else {
+                mergedIntervals.add(interval);
+            }
+        }
+
+        return mergedIntervals.toArray(new int[][]{});
+    }
 
 }
