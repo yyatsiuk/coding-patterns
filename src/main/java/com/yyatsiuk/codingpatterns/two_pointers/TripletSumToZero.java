@@ -4,7 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <a href="https://leetcode.com/problems/3sum/">15. 3Sum</a>
@@ -28,41 +33,49 @@ public class TripletSumToZero {
     public static List<List<Integer>> searchTriplets(int[] nums) {
         List<List<Integer>> triplets = new ArrayList<>();
         Arrays.sort(nums);
-
         for (int i = 0; i < nums.length; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) {
-                continue;
-            }
+            if (i > 0 && nums[i - 1] == nums[i]) continue;
 
-            int x = nums[i];
-            int minusX = x * -1;
+            int compliment = nums[i] * -1;
             int left = i + 1;
             int right = nums.length - 1;
-
             while (left < right) {
-                int y = nums[left];
-                int z = nums[right];
-                if (minusX == y + z) {
-                    List<Integer> triplet = List.of(x, y, z);
-                    triplets.add(triplet);
+                if (nums[left] + nums[right] == compliment) {
+                    triplets.add(List.of(nums[left], nums[right], nums[i]));
                     left++;
                     right--;
 
-                    while (left < right && nums[left] == nums[left - 1])
-                        left++;
-                    while (left < right && nums[right] == nums[right + 1])
-                        right--;
+                    while (left < nums.length && nums[left - 1] == nums[left]) left++;
+                    while (right >= 0 && nums[right + 1] == nums[right]) right--;
+                } else if (nums[left] + nums[right] > compliment) right--;
+                else left++;
+            }
+        }
+        return triplets;
+    }
 
-                } else if (minusX > y + z) {
-                    left++;
-                } else {
-                    right--;
+    public List<List<Integer>> threeSum(int[] nums) {
+        Set<Integer> dups = new HashSet<>();
+        Map<Integer, Integer> seen = new HashMap<>();
+        Set<List<Integer>> res = new HashSet<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if (dups.add(nums[i])) {
+                for (int j = i + 1; j < nums.length; j++) {
+                    int num = -nums[i] - nums[j];
+                    if (seen.containsKey(num) && seen.get(num) == 1) {
+                        List<Integer> triplet = Arrays.asList(nums[i], nums[j], num);
+                        Collections.sort(triplet);
+                        res.add(triplet);
+                    }
+                    seen.put(nums[j], i);
                 }
             }
         }
 
-        return triplets;
+        return new ArrayList<>(res);
     }
+
 
     public static void main(String[] args) {
         log.info("Result = {}", TripletSumToZero.searchTriplets(new int[]{-3, 0, 1, 2, -1, 1, -2}));

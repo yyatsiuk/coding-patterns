@@ -31,7 +31,6 @@ public class NoRepeatSubstring {
         int maxLength = 0;
         int windowStart = 0;
         Map<Character, Integer> charIndexMap = new HashMap<>();
-
         for (int windowEnd = 0; windowEnd < s.length(); windowEnd++) {
             char rightChar = s.charAt(windowEnd);
 
