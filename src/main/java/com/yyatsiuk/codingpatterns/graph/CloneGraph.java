@@ -1,9 +1,9 @@
 package com.yyatsiuk.codingpatterns.graph;
 
-import java.util.ArrayList;
+import com.yyatsiuk.codingpatterns.common.GraphNode;
+
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
@@ -12,42 +12,22 @@ import java.util.Queue;
  */
 public class CloneGraph {
 
-    private static class Node {
-        public int val;
-        public List<Node> neighbors;
-
-        public Node() {
-            this.val = 0;
-            this.neighbors = new ArrayList<>();
-        }
-
-        public Node(int val) {
-            this.val = val;
-            this.neighbors = new ArrayList<>();
-        }
-
-        public Node(int val, ArrayList<Node> neighbors) {
-            this.val = val;
-            this.neighbors = neighbors;
-        }
-    }
-
-    public Node cloneGraph(Node node) {
+    public GraphNode cloneGraph(GraphNode node) {
         if (node == null) {
-            return node;
+            return null;
         }
 
-        Map<Node, Node> visited = new HashMap<>();
-        Queue<Node> queue = new LinkedList<>();
+        Map<GraphNode, GraphNode> visited = new HashMap<>();
+        Queue<GraphNode> queue = new LinkedList<>();
         queue.add(node);
-        visited.put(node, new Node(node.val));
+        visited.put(node, new GraphNode(node.val));
 
         while (!queue.isEmpty()) {
-            Node currentNode = queue.remove();
-            for (Node ngh : currentNode.neighbors) {
+            GraphNode currentNode = queue.remove();
+            for (GraphNode ngh : currentNode.neighbors) {
                 if (!visited.containsKey(ngh)) {
                     queue.add(ngh);
-                    visited.put(ngh, new Node(ngh.val));
+                    visited.put(ngh, new GraphNode(ngh.val));
                 }
                 visited.get(currentNode).neighbors.add(visited.get(ngh));
             }
