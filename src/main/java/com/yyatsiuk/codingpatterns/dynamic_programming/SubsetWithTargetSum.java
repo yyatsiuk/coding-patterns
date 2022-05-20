@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * <a href="https://www.educative.io/courses/grokking-the-coding-interview/gxrnL0GQGqk">Subset Sum (medium)</a>
  */
-public class SubsetSum {
+public class SubsetWithTargetSum {
 
     static boolean canPartition(int[] nums, int sum) {
         if (nums == null || nums.length <= 1) return false;
