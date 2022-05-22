@@ -24,10 +24,10 @@ public class TopologicalSortKahn {
         }
 
         for (int[] edge : edges) {
-            int parent = edge[0];
-            int child = edge[1];
-            graph.get(parent).add(child);
-            inDegree[child]++;
+            int from = edge[0];
+            int to = edge[1];
+            graph.get(from).add(to);
+            inDegree[to]++;
         }
 
         Queue<Integer> queue = new LinkedList<>();
