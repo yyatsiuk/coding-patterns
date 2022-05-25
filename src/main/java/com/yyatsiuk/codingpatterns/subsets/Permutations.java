@@ -10,6 +10,10 @@ import java.util.Queue;
  */
 public class Permutations {
 
+    /**
+     * Time Complexity: O(N ∗ N!)
+     * Space Complexity: O(N * N!)
+     */
     public static List<List<Integer>> findPermutations(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         Queue<List<Integer>> permutations = new LinkedList<>();
@@ -34,8 +38,31 @@ public class Permutations {
         return result;
     }
 
+    /**
+     * Time Complexity: O(N ∗ N!)
+     * Space Complexity: O(N * N!)
+     */
+    public static List<List<Integer>> findPermutationsRecursive(int[] nums) {
+        List<List<Integer>> permutations = new ArrayList<>();
+        findPermutationsRecursive(0, nums, new ArrayList<>(), permutations);
+        return permutations;
+    }
+
+    private static void findPermutationsRecursive(int index, int[] nums, List<Integer> perms, List<List<Integer>> result) {
+        if (index >= nums.length) {
+            result.add(perms);
+            return;
+        }
+
+        for (int i = 0; i <= perms.size(); i++) {
+            ArrayList<Integer> newPerms = new ArrayList<>(perms);
+            newPerms.add(i, nums[index]);
+            findPermutationsRecursive(index + 1, nums, newPerms, result);
+        }
+    }
+
     public static void main(String[] args) {
-        List<List<Integer>> result = Permutations.findPermutations(new int[]{1, 3, 5});
+        List<List<Integer>> result = Permutations.findPermutationsRecursive(new int[]{1, 3, 5});
         System.out.print("Here are all the permutations: " + result);
     }
 
