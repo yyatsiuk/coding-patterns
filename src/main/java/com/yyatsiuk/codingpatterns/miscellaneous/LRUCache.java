@@ -8,58 +8,9 @@ import java.util.Map;
  */
 public class LRUCache {
 
-    class Node {
-        int value;
-        int key;
-        Node prev;
-        Node next;
-
-        public Node() {
-        }
-
-        public Node(int key, int value) {
-            this.key = key;
-            this.value = value;
-            this.prev = null;
-            this.next = null;
-        }
-    }
-
-    class DoublyLinkedList {
-        Node head;
-        Node tail;
-
-        public DoublyLinkedList() {
-            head = new Node();
-            tail = new Node();
-            this.head.next = this.tail;
-            this.tail.prev = head;
-        }
-
-        public void insertHead(Node n) {
-            n.prev = head;
-            n.next = head.next;
-            head.next.prev = n;
-            head.next = n;
-        }
-
-        public void remove(Node n) {
-            n.prev.next = n.next;
-            n.next.prev = n.prev;
-        }
-
-        public int removeTail() {
-            Node n = tail.prev;
-            int key = n.key;
-            remove(n);
-
-            return key;
-        }
-    }
-
-    Map<Integer, Node> cache;
-    DoublyLinkedList list;
-    int capacity;
+    private final Map<Integer, Node> cache;
+    private final DoublyLinkedList list;
+    private final int capacity;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
@@ -68,31 +19,79 @@ public class LRUCache {
     }
 
     public int get(int key) {
-        if (!cache.containsKey(key))
-            return -1;
-        update(key, cache.get(key));
+        Node node = cache.get(key);
+        if (node == null) return -1;
 
-        return cache.get(key).value;
+        list.moveUp(node);
+        return node.value;
     }
 
     public void put(int key, int value) {
-        Node n = new Node(key, value);
+        Node node = new Node(key, value);
 
-        if (cache.containsKey(key))
-            list.remove(cache.get(key));
-        else if (cache.size() >= capacity) {
-            int k = list.removeTail();
-            cache.remove(k);
+        if (cache.containsKey(key)) {
+            Node oldNode = cache.get(key);
+            list.remove(oldNode);
+        } else if (cache.size() == capacity) {
+            Node oldNode = list.removeLast();
+            cache.remove(oldNode.key);
         }
 
-        list.insertHead(n);
-        cache.put(key, n);
+        list.addFirst(node);
+        cache.put(key, node);
     }
 
-    private void update(int key, Node n) {
-        list.remove(n);
-        list.insertHead(n);
-        cache.put(key, n);
+    private static class Node {
+        private int key;
+        private int value;
+        private Node prev;
+        private Node next;
+
+        public Node() {
+        }
+
+        public Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+
+        }
+    }
+
+    private static class DoublyLinkedList {
+        private final Node head;
+        private final Node tail;
+
+        public DoublyLinkedList() {
+            this.head = new Node();
+            this.tail = new Node();
+
+            head.next = tail;
+            tail.prev = head;
+        }
+
+        public void addFirst(Node node) {
+            node.prev = head;
+            node.next = head.next;
+            head.next.prev = node;
+            head.next = node;
+        }
+
+        public Node removeLast() {
+            Node tailNode = tail.prev;
+            remove(tailNode);
+
+            return tailNode;
+        }
+
+        public void moveUp(Node node) {
+            remove(node);
+            addFirst(node);
+        }
+
+        private void remove(Node node) {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+        }
     }
 
 }
