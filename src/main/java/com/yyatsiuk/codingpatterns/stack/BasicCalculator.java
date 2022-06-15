@@ -1,89 +1,48 @@
 package com.yyatsiuk.codingpatterns.stack;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Set;
+import java.util.LinkedList;
 
+/**
+ * <a href="https://leetcode.com/problems/basic-calculator/">224. Basic Calculator</a>
+ */
 public class BasicCalculator {
 
 
     public int calculate(String s) {
-        if (s == null || s.isBlank()) {
-            return 0;
-        }
+        int len = s.length();
+        int sign = 1;
+        int result = 0;
 
-        String normalizedExpression = normalize(s);
-        StringBuilder stringBuilder = openParentheses(new StringBuilder(normalizedExpression));
-
-        return Integer.parseInt(calculateExp(stringBuilder.toString()));
-    }
-
-    private String normalize(String s) {
-        return s.replace(" ", "")
-                .replace("+", " + ")
-                .replace("-", " - ")
-                .strip();
-    }
-
-    private StringBuilder openParentheses(StringBuilder str) {
-        int lastOpen = str.lastIndexOf("(");
-        if (lastOpen == -1) {
-            return str;
-        }
-        int lastClose = str.indexOf(")", lastOpen);
-
-        String expression = str.substring(lastOpen + 1, lastClose);
-        String result = calculateExp(expression);
-
-        str.delete(lastOpen, lastClose + 1);
-        str.insert(lastOpen, result);
-
-
-        return openParentheses(str);
-    }
-
-    private String calculateExp(String expression) {
-        String[] tokenizedExpression = expression.split(" ");
-        if (tokenizedExpression.length == 1) {
-            return tokenizedExpression[0];
-        }
-
-        Deque<String> queue = new ArrayDeque<>();
-        for (String token : tokenizedExpression) {
-            if ("".equals(token)) {
-                queue.add("0");
-            } else {
-                queue.add(token);
+        Deque<Integer> stack = new LinkedList<>();
+        for (int i = 0; i < len; i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                int sum = s.charAt(i) - '0';
+                while (i + 1 < len && Character.isDigit(s.charAt(i + 1))) {
+                    sum = sum * 10 + s.charAt(i + 1) - '0';
+                    i++;
+                }
+                result += sum * sign;
+            } else if (s.charAt(i) == '+') {
+                sign = 1;
+            } else if (s.charAt(i) == '-') {
+                sign = -1;
+            } else if (s.charAt(i) == '(') {
+                stack.push(result);
+                stack.push(sign);
+                result = 0;
+                sign = 1;
+            } else if (s.charAt(i) == ')') {
+                result = result * stack.pop() + stack.pop();
             }
         }
 
-        String num1, num2, operator;
-        while (queue.size() > 1) {
-            num1 = queue.removeFirst();
-            if (Set.of("-", "+").contains(num1)) {
-                operator = num1;
-                num1 = "0";
-            } else {
-                operator = queue.removeFirst();
-            }
-            num2 = queue.removeFirst();
-
-            final int result;
-            if ("+".equals(operator)) {
-                result = Integer.parseInt(num1) + Integer.parseInt(num2);
-            } else {
-                result = Integer.parseInt(num1) - Integer.parseInt(num2);
-            }
-
-            queue.addFirst(String.valueOf(result));
-        }
-
-        return queue.remove();
+        return result;
     }
 
     public static void main(String[] args) {
         BasicCalculator basicCalculator = new BasicCalculator();
-        int result = basicCalculator.calculate("1-(-2)");
+        int result = basicCalculator.calculate("10+2-(5+6+11)-(1+2)");
         System.out.println(result);
     }
 
