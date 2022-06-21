@@ -8,17 +8,21 @@ public class MySqrt {
     public static int sqrt(int x) {
         if (x < 2) return x;
 
-        long num;
-        int pivot, left = 2, right = x / 2;
+        int left = 0;
+        int right = x / 2;
+        int sqrt = 0;
         while (left <= right) {
-            pivot = left + (right - left) / 2;
-            num = (long) pivot * pivot;
-            if (num > x) right = pivot - 1;
-            else if (num < x) left = pivot + 1;
-            else return pivot;
+            int mid = (left + right) >>> 1;
+            long square = (long) mid * mid;
+            if (square > x) {
+                right = mid - 1;
+            } else {
+                sqrt = mid;
+                left = mid + 1;
+            }
         }
 
-        return right;
+        return sqrt;
     }
 
     public static void main(String[] args) {
