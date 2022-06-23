@@ -13,6 +13,12 @@ public class TreeNode {
         val = x;
     }
 
+    public TreeNode(int x, TreeNode left, TreeNode right) {
+        this.left = left;
+        this.right = right;
+        this.val = x;
+    }
+
     public static void printLevelOrder(TreeNode root) {
         if (root == null) {
             return;
