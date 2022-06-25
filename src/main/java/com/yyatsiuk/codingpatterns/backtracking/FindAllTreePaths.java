@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.depth_first_search;
+package com.yyatsiuk.codingpatterns.backtracking;
 
 import com.yyatsiuk.codingpatterns.common.TreeNode;
 

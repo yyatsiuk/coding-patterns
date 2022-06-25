@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.subsets;
+package com.yyatsiuk.codingpatterns.backtracking;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -44,25 +44,50 @@ public class Permutations {
      */
     public static List<List<Integer>> findPermutationsRecursive(int[] nums) {
         List<List<Integer>> permutations = new ArrayList<>();
-        findPermutationsRecursive(0, nums, new ArrayList<>(), permutations);
+        permute(0, nums, new ArrayList<>(), permutations);
         return permutations;
     }
 
-    private static void findPermutationsRecursive(int index, int[] nums, List<Integer> perms, List<List<Integer>> result) {
+    private static void permute(int index, int[] nums, List<Integer> perm, List<List<Integer>> result) {
         if (index >= nums.length) {
-            result.add(perms);
-            return;
-        }
-
-        for (int i = 0; i <= perms.size(); i++) {
-            ArrayList<Integer> newPerms = new ArrayList<>(perms);
-            newPerms.add(i, nums[index]);
-            findPermutationsRecursive(index + 1, nums, newPerms, result);
+            result.add(new ArrayList<>(perm));
+        } else {
+            for (int i = 0; i <= perm.size(); i++) {
+                perm.add(i, nums[index]);
+                permute(index + 1, nums, perm, result);
+                perm.remove(i);
+            }
         }
     }
 
+    // the fastest solution from listed
+    public static List<List<Integer>> findPermutationsRecursive2(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        permute2(new boolean[nums.length], nums, new ArrayList<>(), result);
+        return result;
+    }
+
+    private static void permute2(boolean[] visited, int[] nums, List<Integer> perm, List<List<Integer>> result) {
+        if (perm.size() == visited.length) {
+            result.add(new ArrayList<>(perm));
+        } else {
+            for (int i = 0; i < visited.length; i++) {
+                if (!visited[i]) {
+                    perm.add(nums[i]);
+                    visited[i] = true;
+
+                    permute2(visited, nums, perm, result);
+
+                    visited[i] = false;
+                    perm.remove(perm.size() - 1);
+                }
+            }
+        }
+    }
+
+
     public static void main(String[] args) {
-        List<List<Integer>> result = Permutations.findPermutationsRecursive(new int[]{1, 3, 5});
+        List<List<Integer>> result = Permutations.findPermutationsRecursive2(new int[]{1, 2, 3});
         System.out.print("Here are all the permutations: " + result);
     }
 
