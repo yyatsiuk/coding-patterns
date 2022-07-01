@@ -17,13 +17,13 @@ public class ParallelCourses3 {
         int[] dist = new int[n + 1];
         Queue<Integer> queue = new ArrayDeque<>();
 
-        for (int i = 1; i <= n; i++) {
-            graph.add(i, new ArrayList<>());
+        for (int i = 0; i <= n; i++) {
+            graph.add(new ArrayList<>());
         }
 
-        for (int i = 1; i <= n; i++) {
-            int parent = relations[i][0];
-            int child = relations[i][1];
+        for (int[] relation : relations) {
+            int parent = relation[0];
+            int child = relation[1];
             graph.get(parent).add(child);
             inDegree[child]++;
         }
