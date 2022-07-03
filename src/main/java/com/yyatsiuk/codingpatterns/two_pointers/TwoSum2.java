@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  * Explanation: The sum of 2 and 4 is 6. Therefore index1 = 1, index2 = 3. We return [1, 3].
  */
 @Slf4j
-public class PairWithTargetSum {
+public class TwoSum2 {
 
     public static int[] twoSum(int[] arr, int targetSum) {
         int start = 0;
