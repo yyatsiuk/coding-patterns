@@ -5,13 +5,13 @@ import java.util.HashMap;
 /**
  * <a href="https://leetcode.com/problems/subarray-sum-equals-k/">560. Subarray Sum Equals K</a>
  * <p>
- * Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+ * Given an array of integers nums and an integer k, return the total number of  subarrays whose sum equals to k.
  * <p>
  * <b>Example 1:</b>
  * Input: nums = [1,1,1], k = 2
  * Output: 2
  * <p>
- * <b>Example 2:</b>
+ * <b>Example 2:</b>k
  * Input: nums = [1,2,3], k = 3
  * Output: 2
  */
@@ -45,7 +45,7 @@ public class SubarraySum {
     }
 
     public static void main(String[] args) {
-        int result = subarraySum(new int[]{1, 2, 3, 6, 4, 1, 7}, 5);
+        int result = subarraySum(new int[]{5, 0, 2, 3, 1}, 5);
         System.out.println(result);
     }
 
