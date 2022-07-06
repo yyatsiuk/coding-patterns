@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.union_find;
+package com.yyatsiuk.codingpatterns.graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
