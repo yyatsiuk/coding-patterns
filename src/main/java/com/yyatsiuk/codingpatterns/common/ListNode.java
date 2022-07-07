@@ -1,5 +1,8 @@
 package com.yyatsiuk.codingpatterns.common;
 
+import lombok.Getter;
+
+@Getter
 public class ListNode {
     public int val;
     public ListNode next;

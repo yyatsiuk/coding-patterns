@@ -1,5 +1,7 @@
 package com.yyatsiuk.codingpatterns.k_way_merge;
 
+import com.yyatsiuk.codingpatterns.common.ListNode;
+
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -9,35 +11,25 @@ import java.util.Queue;
  */
 public class MergeKSortedLists {
 
-    static class ListNode {
-        int value;
-        ListNode next;
+    public ListNode mergeKLists(ListNode[] lists) {
+        Queue<ListNode> minHeap = new PriorityQueue<>(Comparator.comparingInt(node -> node.val));
 
-        ListNode(int value) {
-            this.value = value;
+        for (ListNode list : lists) {
+            if (list != null) minHeap.add(list);
         }
-    }
+        if (minHeap.isEmpty()) return null;
 
-    public static ListNode mergeKLists(ListNode[] lists) {
-        Queue<ListNode> minHeap = new PriorityQueue<>(Comparator.comparingInt(n -> n.value));
-
-        for (ListNode root : lists) {
-            if (root != null) {
-                minHeap.add(root);
-            }
+        ListNode head = minHeap.poll();
+        ListNode tail = head;
+        if (head.next != null) {
+            minHeap.add(head.next);
         }
 
-        ListNode head = null;
-        ListNode tail = null;
         while (!minHeap.isEmpty()) {
             ListNode minNode = minHeap.poll();
-            if (head == null) {
-                head = minNode;
-                tail = minNode;
-            } else {
-                tail.next = minNode;
-                tail = tail.next;
-            }
+            tail.next = minNode;
+            tail = tail.next;
+
             if (minNode.next != null) {
                 minHeap.add(minNode.next);
             }
@@ -47,6 +39,7 @@ public class MergeKSortedLists {
     }
 
     public static void main(String[] args) {
+        MergeKSortedLists mergeKSortedLists = new MergeKSortedLists();
         ListNode l1 = new ListNode(2);
         l1.next = new ListNode(6);
         l1.next.next = new ListNode(8);
@@ -59,10 +52,10 @@ public class MergeKSortedLists {
         l3.next = new ListNode(3);
         l3.next.next = new ListNode(4);
 
-        ListNode result = MergeKSortedLists.mergeKLists(new ListNode[]{l1, l2, l3});
+        ListNode result = mergeKSortedLists.mergeKLists(new ListNode[]{l1, l2, l3});
         System.out.print("Here are the elements form the merged list: ");
         while (result != null) {
-            System.out.print(result.value + " ");
+            System.out.print(result.val + " ");
             result = result.next;
         }
     }
