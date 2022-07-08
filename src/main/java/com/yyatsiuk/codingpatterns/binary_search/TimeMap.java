@@ -10,47 +10,48 @@ import java.util.Map;
  */
 public class TimeMap {
 
-    private record ComposedKey(String key, int timestamp) {
+    private record TimeValue(String value, int time) {
     }
 
-    private final Map<ComposedKey, String> hashtable;
-    private final Map<String, List<Integer>> timestamps;
+    private final Map<String, List<TimeValue>> store;
 
     public TimeMap() {
-        this.hashtable = new HashMap<>();
-        this.timestamps = new HashMap<>();
+        this.store = new HashMap<>();
     }
 
     public void set(String key, String value, int timestamp) {
-        hashtable.put(new ComposedKey(key, timestamp), value);
-        List<Integer> stmps = timestamps.getOrDefault(key, new ArrayList<>());
-        stmps.add(timestamp);
-        timestamps.put(key, stmps);
+        store.putIfAbsent(key, new ArrayList<>());
+        store.get(key).add(new TimeValue(value, timestamp));
     }
 
     public String get(String key, int timestamp) {
-        String v = hashtable.get(new ComposedKey(key, timestamp));
-        if (v != null) return v;
-        else if (!timestamps.containsKey(key) || timestamp < timestamps.get(key).get(0)) return "";
-        else return hashtable.get(new ComposedKey(key, findNum(timestamps.get(key), timestamp)));
+        List<TimeValue> timeValue = store.get(key);
+        if (timeValue == null || timeValue.isEmpty()) {
+            return "";
+        }
+
+        int time = binarySearch(timeValue, timestamp);
+        if (time == -1) return "";
+        return timeValue.get(time).value;
     }
 
-    private int findNum(List<Integer> list, int target) {
-        int lo = 0;
-        int hi = list.size() - 1;
-        while (lo <= hi) {
-            int mid = (lo + hi) >>> 1;
-            Integer midValue = list.get(mid);
-            if (target < midValue) {
-                hi = mid - 1;
-            } else if (target > midValue) {
-                lo = mid + 1;
+    private int binarySearch(List<TimeValue> values, int timestamp) {
+        int left = 0;
+        int right = values.size() - 1;
+        int boundaryIndex = -1;
+
+        while (left <= right) {
+            int mid = (left + right) >>> 1;
+            if (values.get(mid).time == timestamp) return mid;
+            else if (values.get(mid).time > timestamp) {
+                right = mid - 1;
             } else {
-                return midValue;
+                boundaryIndex = mid;
+                left = mid + 1;
             }
         }
 
-        return lo > 0 ? list.get(lo - 1) : list.get(lo);
+        return boundaryIndex;
     }
 
 }
