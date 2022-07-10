@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.stack;
+package com.yyatsiuk.codingpatterns.monotonous_stack;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import java.util.Deque;
 /**
  * <a href="https://leetcode.com/problems/next-greater-element-ii/">503. Next Greater Element II</a>
  */
-public class MonotonousStack {
+public class NextGreaterElementII {
 
     public int[] nextGreaterElements(int[] arr) {
         int[] nextGrater = new int[arr.length];
@@ -32,7 +32,7 @@ public class MonotonousStack {
     }
 
     public static void main(String[] args) {
-        MonotonousStack monotonousStack = new MonotonousStack();
+        NextGreaterElementII monotonousStack = new NextGreaterElementII();
         int[] ints = monotonousStack.nextGreaterElements(new int[]{1, 2, 1});
         System.out.println(Arrays.toString(ints));
     }
