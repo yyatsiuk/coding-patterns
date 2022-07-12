@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.trie;
+package com.yyatsiuk.codingpatterns.data_structures.trie;
 
 public class Trie {
 
