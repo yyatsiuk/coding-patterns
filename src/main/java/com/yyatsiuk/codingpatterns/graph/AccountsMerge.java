@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.depth_first_search;
+package com.yyatsiuk.codingpatterns.graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
