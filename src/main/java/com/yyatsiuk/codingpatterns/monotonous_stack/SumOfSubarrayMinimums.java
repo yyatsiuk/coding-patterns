@@ -40,6 +40,24 @@ public class SumOfSubarrayMinimums {
         return (int) (sum % MOD);
     }
 
+    public int sumSubarrayMinsCompact(int[] arr) {
+        int n = arr.length;
+        long sum = 0;
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i <= n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] > (i == n ? Integer.MIN_VALUE : arr[i])) {
+                int mid = stack.pop();
+                long left = stack.isEmpty() ? -1 : stack.peek();
+                sum += (arr[mid] * (i - mid) * (mid - left));
+                sum %= MOD;
+            }
+
+            stack.push(i);
+        }
+
+        return (int) sum;
+    }
+
 
     public static void main(String[] args) {
         SumOfSubarrayMinimums test = new SumOfSubarrayMinimums();
