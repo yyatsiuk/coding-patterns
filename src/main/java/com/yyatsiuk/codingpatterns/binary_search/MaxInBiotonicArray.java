@@ -3,7 +3,7 @@ package com.yyatsiuk.codingpatterns.binary_search;
 /**
  * <a href="https://leetcode.com/problems/peak-index-in-a-mountain-array/">852. Peak Index in a Mountain Array</a>
  */
-public class MaxInBitonicArray {
+public class MaxInBiotonicArray {
 
 
     public int peakIndexInMountainArray(int[] arr) {
