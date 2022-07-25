@@ -1,4 +1,4 @@
-package com.yyatsiuk.codingpatterns.subsets;
+package com.yyatsiuk.codingpatterns.backtracking;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -33,9 +33,35 @@ public class GenerateParentheses {
         return result;
     }
 
+
+    public List<String> generateParenthesisBacktracking(int n) {
+        List<String> result = new ArrayList<>();
+        backtrack(0, 0, new StringBuilder(), result, n);
+        return result;
+    }
+
+    private void backtrack(int open, int close, StringBuilder sb, List<String> result, int max) {
+        if (sb.length() == max * 2) {
+            result.add(sb.toString());
+            return;
+        }
+
+        if (open < max) {
+            sb.append("(");
+            backtrack(open + 1, close, sb, result, max);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        if (close < open) {
+            sb.append(")");
+            backtrack(open, close + 1, sb, result, max);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+    }
+
     public static void main(String[] args) {
         GenerateParentheses solve = new GenerateParentheses();
-        List<String> result = solve.generateParenthesis(15);
+        List<String> result = solve.generateParenthesisBacktracking(3);
         System.out.println("All combinations of balanced parentheses are: " + result);
     }
 
