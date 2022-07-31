@@ -1,0 +1,38 @@
+package com.yyatsiuk.codingpatterns.math;
+
+/**
+ * <a href="https://leetcode.com/problems/integer-to-english-words/">273. Integer to English Words</a>
+ */
+public class IntegerToEnglishWords {
+
+    private static final int[] INT_NUMBERS = {1_000_000_000, 1_000_000, 1000, 100, 90, 80, 70, 60, 50, 40, 30,
+            20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+    private static final String[] STRING_NUMBERS = {
+            "Billion", "Million", "Thousand", "Hundred", "Ninety", "Eighty", "Seventy", "Sixty", "Fifty", "Forty",
+            "Thirty", "Twenty", "Nineteen", "Eighteen", "Seventeen", "Sixteen", "Fifteen", "Fourteen", "Thirteen", "Twelve",
+            "Eleven", "Ten", "Nine", "Eight", "Seven", "Six", "Five", "Four", "Three", "Two", "One"};
+
+    public String numberToWords(int num) {
+        if (num == 0) {
+            return "";
+        }
+
+        String result = "";
+        for (int i = 0; i < INT_NUMBERS.length; i++) {
+            if (num >= INT_NUMBERS[i]) {
+                result = (num >= 100 ? numberToWords(num / INT_NUMBERS[i]) + " " : "") +
+                        STRING_NUMBERS[i] + " " + numberToWords(num % INT_NUMBERS[i]);
+                break;
+            }
+        }
+
+        return result.trim();
+    }
+
+    public static void main(String[] args) {
+        IntegerToEnglishWords test = new IntegerToEnglishWords();
+        String res = test.numberToWords(1000256);
+        System.out.println(res);
+    }
+
+}
