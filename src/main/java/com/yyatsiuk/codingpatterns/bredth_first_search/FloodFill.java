@@ -1,8 +1,6 @@
 package com.yyatsiuk.codingpatterns.bredth_first_search;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 /**
@@ -17,28 +15,19 @@ public class FloodFill {
         int color = image[sr][sc];
         if (color == newColor) return image;
 
+        final int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         Queue<int[]> queue = new LinkedList<>();
+        image[sr][sc] = newColor;
         queue.add(new int[]{sr, sc});
         while (!queue.isEmpty()) {
-            int[] pixel = queue.remove();
-            int pSr = pixel[0];
-            int pSc = pixel[1];
-            image[pSr][pSc] = newColor;
-
-            if (pSr + 1 < n && image[pSr + 1][pSc] == color) {
-                queue.add(new int[]{pSr + 1, pSc});
-            }
-
-            if (pSr - 1 >= 0 && image[pSr - 1][pSc] == color) {
-                queue.add(new int[]{pSr - 1, pSc});
-            }
-
-            if (pSc + 1 < m && image[pSr][pSc + 1] == color) {
-                queue.add(new int[]{pSr, pSc + 1});
-            }
-
-            if (pSc - 1 >= 0 && image[pSr][pSc - 1] == color) {
-                queue.add(new int[]{pSr, pSc - 1});
+            int[] pixel = queue.poll();
+            for (int[] dir : directions) {
+                int newSr = pixel[0] + dir[0];
+                int newSc = pixel[1] + dir[1];
+                if (newSr >= 0 && newSr < n && newSc >= 0 && newSc < m && image[newSr][newSc] == color) {
+                    image[newSr][newSc] = newColor;
+                    queue.add(new int[]{newSr, newSc});
+                }
             }
         }
 
@@ -60,29 +49,6 @@ public class FloodFill {
             if (r + 1 < image.length) dfs(image, r + 1, c, color, newColor);
             if (c + 1 < image[0].length) dfs(image, r, c + 1, color, newColor);
         }
-    }
-
-    public int[][] insert(int[][] intervals, int[] newInterval) {
-        if (intervals.length == 0) {
-            return new int[][]{newInterval};
-        }
-
-        List<int[]> mergedIntervals = new ArrayList<>();
-        int iter = 0;
-        while (iter < intervals.length) {
-            int[] interval = intervals[iter++];
-            if (newInterval[1] >= interval[0] && newInterval[0] <= interval[1]) {
-                newInterval[0] = Math.min(interval[0], newInterval[0]);
-                newInterval[1] = Math.max(interval[1], newInterval[1]);
-            } else if (newInterval[0] < interval[0]) {
-                mergedIntervals.add(newInterval);
-                break;
-            } else {
-                mergedIntervals.add(interval);
-            }
-        }
-
-        return mergedIntervals.toArray(new int[][]{});
     }
 
 }
